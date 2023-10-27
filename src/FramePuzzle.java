@@ -84,10 +84,9 @@ public class FramePuzzle extends JFrame implements ActionListener {
         }
 
         frame = new JFrame("15 Puzzle Game");
-        frame.setLocation(400, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
         frame.setSize(HEIGHT, WIDTH);
+        frame.setLocationRelativeTo(null);
 
 
         panel.setLayout(new GridLayout(DIM, DIM));
