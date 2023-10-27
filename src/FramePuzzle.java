@@ -1,11 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class FramePuzzle extends JFrame implements ActionListener {
+public class FramePuzzle extends JFrame {
 
     public static final int DIM = 4;
 
@@ -79,7 +77,7 @@ public class FramePuzzle extends JFrame implements ActionListener {
             board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             board[ROW][COL].setBackground(Color.WHITE);
             board[ROW][COL].setForeground(Color.BLACK);
-            board[ROW][COL].addActionListener(this);
+            board[ROW][COL].addActionListener(new actionListener());
             panel.add(board[ROW][COL]);
         }
 
@@ -102,8 +100,4 @@ public class FramePuzzle extends JFrame implements ActionListener {
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }
