@@ -99,4 +99,20 @@ public class FramePuzzle extends JFrame {
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
+    public boolean isGameDone(ArrayList<Integer> currentBoard) {
+        ArrayList<Integer> targetBoard = new ArrayList<>(SIZE);
+
+        for (int i = 0; i < SIZE - 1; i++) {
+            targetBoard.add(i + 1);
+        }
+        targetBoard.add(0);
+
+
+        if (currentBoard.equals(targetBoard)) {
+            JOptionPane.showMessageDialog(null, "Congratulations! You won");
+            return true;
+        }
+
+        return false;
+    }
 }
