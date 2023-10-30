@@ -4,29 +4,30 @@ import java.awt.event.ActionListener;
 
 
 public class actionListener extends FramePuzzle implements ActionListener {
-    JButton b1 = new JButton();
-    public actionListener(JButton buttonFromFramePuzzle) {
-        this.b1 = buttonFromFramePuzzle;
+    public FramePuzzle fifteenPuzzle;
+
+    public actionListener(FramePuzzle fifteenPuzzle) {
+        this.fifteenPuzzle = fifteenPuzzle;
     }
+
     @Override
-    public void actionPerformed(ActionEvent event) throws IllegalArgumentException {
+    public void actionPerformed(ActionEvent event) {
         JButton buttonPressed = (JButton) event.getSource();
-        int index = indexOf(buttonPressed.getText());
+        int index = fifteenPuzzle.indexOf(buttonPressed.getText());
         if (index == -1) {
             throw (new IllegalArgumentException("Index should be between 0-15"));
         }
-        int row = index / DIM;
-        int column = index % DIM;
+        int row = index / FramePuzzle.DIM;
+        int column = index % FramePuzzle.DIM;
 
+        fifteenPuzzle.makeMove(row, column);
 
-        makeMove(row, column);
-
-
-        if (isGameDone()) {
+        if (fifteenPuzzle.isGameDone()) {
             JOptionPane.showMessageDialog(null, "You Win The Game.");
         }
     }
-
-
-
 }
+
+
+
+

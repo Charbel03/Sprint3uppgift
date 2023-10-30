@@ -19,10 +19,81 @@ public class FramePuzzle extends JFrame {
     public JFrame frame;
     public JPanel panel = new JPanel();
     public JPanel panel1 = new JPanel();
-    public JButton newGame = new JButton("New Game");
+   // public JButton newGame = new JButton("New Game");
 
+
+
+    public int getIndex(int i, int j) {
+        return ((i * DIM) + j);
+
+    }
+
+
+    public void puzzleFrame () {
+        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
+
+
+        for (boolean isSolvable = false; isSolvable == false;) {
+
+
+            intialList = new ArrayList<Integer>(SIZE);
+            for (int i = 0; i < SIZE; i++) {
+                intialList.add(i, i);
+            }
+
+
+            Collections.shuffle(intialList);
+
+
+            isSolvable = isSolvable(intialList);
+        }
+        System.out.println("Initial Board state:" + intialList);
+
+
+
+
+        for (int index = 0; index < SIZE; index++) {
+            final int ROW = index / DIM;
+            final int COL = index % DIM;
+            board[ROW][COL] = new JButton(String.valueOf(intialList.get(index)));
+
+            if (intialList.get(index) == 0) {
+                emptyCell = index;
+                board[ROW][COL].setVisible(false);
+            }
+            board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            board[ROW][COL].setBackground(Color.WHITE);
+            board[ROW][COL].setForeground(Color.BLACK);
+            board[ROW][COL].addActionListener(new actionListener(this));
+            panel.add(board[ROW][COL]);
+        }
+
+        frame = new JFrame("15 Puzzle Game");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(HEIGHT, WIDTH);
+        frame.setLocationRelativeTo(null);
+
+
+        panel.setLayout(new GridLayout(DIM, DIM));
+        panel.setBackground(Color.GRAY);
+
+
+        java.awt.Container content = frame.getContentPane();
+        content.add(panel, BorderLayout.CENTER);
+        content.add(panel1, BorderLayout.SOUTH);
+      //  panel1.add(newGame);
+       // newGame.addActionListener(new actionListener(this.newGame));
+        content.setBackground(Color.GRAY);
+        frame.setVisible(true);
+    }
 
     public boolean isSolvable(ArrayList<Integer> list) {
+
+        if(list.size() != 16)
+        {
+            System.err.println("isSolvable function works only" +
+                    "with a list having 0-16 as values");
+        }
 
         int inversionSum = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -45,64 +116,6 @@ public class FramePuzzle extends JFrame {
         return ((inversionSum & 1) == 0) ? true : false;
     }
 
-    public void puzzleFrame () {
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
-
-
-        for (boolean isSolvable = false; isSolvable == false;) {
-
-
-            intialList = new ArrayList<Integer>(SIZE);
-            for (int i = 0; i < SIZE; i++) {
-                intialList.add(i, i);
-            }
-
-
-            Collections.shuffle(intialList);
-
-            isSolvable = isSolvable(intialList);
-        }
-        System.out.println("Initial Board state:" + intialList);
-
-
-        for (int index = 0; index < SIZE; index++) {
-            final int ROW = index / DIM;
-            final int COL = index % DIM;
-            board[ROW][COL] = new JButton(String.valueOf(intialList.get(index)));
-
-            if (intialList.get(index) == 0) {
-                emptyCell = index;
-                board[ROW][COL].setVisible(false);
-            }
-            board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            board[ROW][COL].setBackground(Color.WHITE);
-            board[ROW][COL].setForeground(Color.BLACK);
-            board[ROW][COL].addActionListener(new actionListener(this.board[ROW][COL]));
-            panel.add(board[ROW][COL]);
-        }
-
-        frame = new JFrame("15 Puzzle Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(HEIGHT, WIDTH);
-        frame.setLocationRelativeTo(null);
-
-
-        panel.setLayout(new GridLayout(DIM, DIM));
-        panel.setBackground(Color.GRAY);
-
-
-        java.awt.Container content = frame.getContentPane();
-        content.add(panel, BorderLayout.CENTER);
-        content.add(panel1, BorderLayout.SOUTH);
-        panel1.add(newGame);
-        newGame.addActionListener(new actionListener(this.newGame));
-        content.setBackground(Color.GRAY);
-        frame.setVisible(true);
-    }
-    public int getIndex(int i, int j) {
-        return ((i * DIM) + j);
-
-    }
     public int indexOf(String cellNum) {
 
         for (int ROW = 0; ROW < board.length; ROW++) {
@@ -170,7 +183,7 @@ public class FramePuzzle extends JFrame {
 
         return true;
     }
-    public boolean isGameDone() {
+   public boolean isGameDone() {
         ArrayList<Integer> solvedState = new ArrayList<>(SIZE);
         for (int i = 1; i < SIZE; i++) {
             solvedState.add(i);
@@ -188,4 +201,6 @@ public class FramePuzzle extends JFrame {
 
         return true;
     }
+
+
 }
