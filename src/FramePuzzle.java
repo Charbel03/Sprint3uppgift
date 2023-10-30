@@ -95,6 +95,7 @@ public class FramePuzzle extends JFrame {
         content.add(panel, BorderLayout.CENTER);
         content.add(panel1, BorderLayout.SOUTH);
         panel1.add(newGame);
+        newGame.addActionListener(new actionListener());
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
