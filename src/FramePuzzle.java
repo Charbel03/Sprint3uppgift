@@ -20,6 +20,8 @@ public class FramePuzzle extends JFrame {
     public JPanel panel = new JPanel();
     public JPanel panel1 = new JPanel();
     public JButton newGame = new JButton("New Game");
+
+
     public boolean isSolvable(ArrayList<Integer> list) {
 
         int inversionSum = 0;
@@ -72,8 +74,6 @@ public class FramePuzzle extends JFrame {
                 emptyCell = index;
                 board[ROW][COL].setVisible(false);
             }
-
-
             board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             board[ROW][COL].setBackground(Color.WHITE);
             board[ROW][COL].setForeground(Color.BLACK);
@@ -99,6 +99,20 @@ public class FramePuzzle extends JFrame {
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
+    public boolean isGameDone(ArrayList<Integer> currentBoard) {
+        ArrayList<Integer> targetBoard = new ArrayList<>(SIZE);
+
+        for (int i = 0; i < SIZE - 1; i++) {
+            targetBoard.add(i + 1);
+        }
+        targetBoard.add(0);
 
 
+        if (currentBoard.equals(targetBoard)) {
+            JOptionPane.showMessageDialog(null, "Congratulations! You won");
+            return true;
+        }
+
+        return false;
+    }
 }
