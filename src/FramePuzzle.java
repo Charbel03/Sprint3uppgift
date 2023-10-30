@@ -74,8 +74,6 @@ public class FramePuzzle extends JFrame implements ActionListener {
                 emptyCell = index;
                 board[ROW][COL].setVisible(false);
             }
-
-
             board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             board[ROW][COL].setBackground(Color.WHITE);
             board[ROW][COL].setForeground(Color.BLACK);
