@@ -20,6 +20,8 @@ public class FramePuzzle extends JFrame {
     public JPanel panel = new JPanel();
     public JPanel panel1 = new JPanel();
     public JButton newGame = new JButton("New Game");
+
+
     public boolean isSolvable(ArrayList<Integer> list) {
 
         int inversionSum = 0;
@@ -96,6 +98,4 @@ public class FramePuzzle extends JFrame {
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
-
-
 }
