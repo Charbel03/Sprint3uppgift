@@ -4,10 +4,7 @@ import java.awt.event.ActionListener;
 
 
 public class actionListener extends FramePuzzle implements ActionListener {
-    JButton b1 = new JButton();
-    public actionListener(JButton buttonFromFramePuzzle) {
-        this.b1 = buttonFromFramePuzzle;
-    }
+
     @Override
     public void actionPerformed(ActionEvent event) throws IllegalArgumentException {
         JButton buttonPressed = (JButton) event.getSource();
@@ -24,6 +21,10 @@ public class actionListener extends FramePuzzle implements ActionListener {
 
         if (isGameDone()) {
             JOptionPane.showMessageDialog(null, "You Win The Game.");
+        }
+
+        if (event.getSource() == newGame){
+            //shuffle metod
         }
     }
 

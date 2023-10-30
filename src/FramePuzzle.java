@@ -77,7 +77,7 @@ public class FramePuzzle extends JFrame {
             board[ROW][COL].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             board[ROW][COL].setBackground(Color.WHITE);
             board[ROW][COL].setForeground(Color.BLACK);
-            board[ROW][COL].addActionListener(new actionListener(this.board[ROW][COL]));
+            board[ROW][COL].addActionListener(new actionListener());
             panel.add(board[ROW][COL]);
         }
 
@@ -95,7 +95,7 @@ public class FramePuzzle extends JFrame {
         content.add(panel, BorderLayout.CENTER);
         content.add(panel1, BorderLayout.SOUTH);
         panel1.add(newGame);
-        newGame.addActionListener(new actionListener(this.newGame));
+        newGame.addActionListener(new actionListener());
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
