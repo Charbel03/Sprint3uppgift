@@ -99,20 +99,93 @@ public class FramePuzzle extends JFrame {
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
     }
-    public boolean isGameDone(ArrayList<Integer> currentBoard) {
-        ArrayList<Integer> targetBoard = new ArrayList<>(SIZE);
+    public int getIndex(int i, int j) {
+        return ((i * DIM) + j);
 
-        for (int i = 0; i < SIZE - 1; i++) {
-            targetBoard.add(i + 1);
+    }
+    public int indexOf(String cellNum) {
+
+        for (int ROW = 0; ROW < board.length; ROW++) {
+            for (int COL = 0; COL < board[ROW].length; COL++) {
+                if (board[ROW][COL].getText().equals(cellNum)) {
+                    return (getIndex(ROW, COL));
+                }
+            }
         }
-        targetBoard.add(0);
+        return -1;
+
+    }
 
 
-        if (currentBoard.equals(targetBoard)) {
-            JOptionPane.showMessageDialog(null, "Congratulations! You won");
-            return true;
+    public boolean makeMove(int row, int col) {
+        final int emptyRow = emptyCell / DIM;
+        final int emptyCol = emptyCell % DIM;
+        int rowDiff = emptyRow - row;
+        int colDiff = emptyCol - col;
+        boolean isInRow = (row == emptyRow);
+        boolean isInCol = (col == emptyCol);
+        boolean isNotDiagonal = (isInRow || isInCol);
+
+        if (isNotDiagonal) {
+            int diff = Math.abs(colDiff);
+
+
+            if (colDiff < 0 & isInRow) {
+                for (int i = 0; i < diff; i++) {
+                    board[emptyRow][emptyCol + i].setText(
+                            board[emptyRow][emptyCol + (i + 1)].getText());
+                }
+
+            }
+            else if (colDiff > 0 & isInRow) {
+                for (int i = 0; i < diff; i++) {
+                    board[emptyRow][emptyCol - i].setText(
+                            board[emptyRow][emptyCol - (i + 1)].getText());
+                }
+            }
+
+            diff = Math.abs(rowDiff);
+
+
+            if (rowDiff < 0 & isInCol) {
+                for (int i = 0; i < diff; i++) {
+                    board[emptyRow + i][emptyCol].setText(
+                            board[emptyRow + (i + 1)][emptyCol].getText());
+                }
+
+            }
+            else if (rowDiff > 0 & isInCol) {
+                for (int i = 0; i < diff; i++) {
+                    board[emptyRow - i][emptyCol].setText(
+                            board[emptyRow - (i + 1)][emptyCol].getText());
+                }
+            }
+
+
+            board[emptyRow][emptyCol].setVisible(true);
+            board[row][col].setText(Integer.toString(0));
+            board[row][col].setVisible(false);
+            emptyCell = getIndex(row, col);
         }
 
-        return false;
+        return true;
+    }
+    public boolean isGameDone() {
+        ArrayList<Integer> solvedState = new ArrayList<>(SIZE);
+        for (int i = 1; i < SIZE; i++) {
+            solvedState.add(i);
+        }
+        solvedState.add(0);
+
+        for (int row = 0; row < DIM; row++) {
+            for (int col = 0; col < DIM; col++) {
+                int cellValue = Integer.parseInt(board[row][col].getText());
+                if (cellValue != solvedState.get(getIndex(row, col))) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
