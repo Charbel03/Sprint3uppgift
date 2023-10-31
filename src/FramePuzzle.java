@@ -40,8 +40,6 @@ public class FramePuzzle extends JFrame {
             for (int i = 0; i < size; i++) {
                 intialList.add(i, i);
             }
-        System.out.println("Initial Board state:" + intialList);
-
 
 
 
