@@ -36,21 +36,10 @@ public class FramePuzzle extends JFrame {
     public void puzzleFrame () {
         ArrayList<Integer> intialList = new ArrayList<Integer>(size);
 
-
-        for (boolean isSolvable = false; isSolvable == false;) {
-
-
             intialList = new ArrayList<Integer>(size);
             for (int i = 0; i < size; i++) {
                 intialList.add(i, i);
             }
-
-
-            Collections.shuffle(intialList);
-
-
-            isSolvable = isSolvable(intialList);
-        }
         System.out.println("Initial Board state:" + intialList);
 
 
@@ -96,38 +85,10 @@ public class FramePuzzle extends JFrame {
 
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
+        shufflePuzzle();
 
     }
 
-
-    public boolean isSolvable(ArrayList<Integer> list) {
-
-        if(list.size() != 16)
-        {
-            System.err.println("isSolvable function works only" +
-                    "with a list having 0-16 as values");
-        }
-
-        int inversionSum = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) == 0) {
-                inversionSum += ((i / dim) + 1);
-                continue;
-            }
-
-            int count = 0;
-            for (int j = i + 1; j < list.size(); j++) {
-
-                if (list.get(j) == 0) {
-                    continue;
-                } else if (list.get(i) > list.get(j)) {
-                    count++;
-                }
-            }
-            inversionSum += count;
-        }
-        return ((inversionSum & 1) == 0) ? true : false;
-    }
 
     public int indexOf(String cellNum) {
 
@@ -199,7 +160,6 @@ public class FramePuzzle extends JFrame {
     public void shufflePuzzle() {
         ArrayList<Integer> shuffledList = new ArrayList<>(size);
 
-        for (boolean isSolvable = false; isSolvable == false;) {
             shuffledList = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {
                 shuffledList.add(i, i);
@@ -207,8 +167,6 @@ public class FramePuzzle extends JFrame {
 
             Collections.shuffle(shuffledList);
 
-            isSolvable = isSolvable(shuffledList);
-        }
 
 
         for (int index = 0; index < size; index++) {
