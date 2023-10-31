@@ -1,43 +1,47 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class FramePuzzle extends JFrame {
 
-    public static final int DIM = 4;
+    public static final int dim = 4;
 
-    public static final int SIZE = DIM * DIM;
+    public static final int size = dim * dim;
 
-    public static final int HEIGHT = 400;
+    public static final int hightFrame = 400;
 
-    public static final int WIDTH = 400;
+    public static final int wifhtFrame = 400;
 
-    public int emptyCell = DIM * DIM;
+    public int emptyCell = dim * dim;
 
-    public JButton[][] board = new JButton[DIM][DIM];
+    public JButton[][] board = new JButton[dim][dim];
     public JFrame frame;
     public JPanel panel = new JPanel();
     public JPanel panel1 = new JPanel();
-   // public JButton newGame = new JButton("New Game");
+
+    public JButton newGameButton;
+
 
 
 
     public int getIndex(int i, int j) {
-        return ((i * DIM) + j);
+        return ((i * dim) + j);
 
     }
 
 
     public void puzzleFrame () {
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
+        ArrayList<Integer> intialList = new ArrayList<Integer>(size);
 
 
         for (boolean isSolvable = false; isSolvable == false;) {
 
 
-            intialList = new ArrayList<Integer>(SIZE);
-            for (int i = 0; i < SIZE; i++) {
+            intialList = new ArrayList<Integer>(size);
+            for (int i = 0; i < size; i++) {
                 intialList.add(i, i);
             }
 
@@ -52,9 +56,9 @@ public class FramePuzzle extends JFrame {
 
 
 
-        for (int index = 0; index < SIZE; index++) {
-            final int ROW = index / DIM;
-            final int COL = index % DIM;
+        for (int index = 0; index < size; index++) {
+            final int ROW = index / dim;
+            final int COL = index % dim;
             board[ROW][COL] = new JButton(String.valueOf(intialList.get(index)));
 
             if (intialList.get(index) == 0) {
@@ -67,25 +71,34 @@ public class FramePuzzle extends JFrame {
             board[ROW][COL].addActionListener(new actionListener(this));
             panel.add(board[ROW][COL]);
         }
+        newGameButton = new JButton("New Game");
+        newGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                shufflePuzzle();
+            }
+        });
+        panel1.add(newGameButton);
 
         frame = new JFrame("15 Puzzle Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(HEIGHT, WIDTH);
+        frame.setSize(hightFrame, wifhtFrame);
         frame.setLocationRelativeTo(null);
 
 
-        panel.setLayout(new GridLayout(DIM, DIM));
+        panel.setLayout(new GridLayout(dim, dim));
         panel.setBackground(Color.GRAY);
 
 
         java.awt.Container content = frame.getContentPane();
         content.add(panel, BorderLayout.CENTER);
         content.add(panel1, BorderLayout.SOUTH);
-      //  panel1.add(newGame);
-       // newGame.addActionListener(new actionListener(this.newGame));
+
         content.setBackground(Color.GRAY);
         frame.setVisible(true);
+
     }
+
 
     public boolean isSolvable(ArrayList<Integer> list) {
 
@@ -98,7 +111,7 @@ public class FramePuzzle extends JFrame {
         int inversionSum = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) == 0) {
-                inversionSum += ((i / DIM) + 1);
+                inversionSum += ((i / dim) + 1);
                 continue;
             }
 
@@ -131,8 +144,8 @@ public class FramePuzzle extends JFrame {
 
 
     public boolean makeMove(int row, int col) {
-        final int emptyRow = emptyCell / DIM;
-        final int emptyCol = emptyCell % DIM;
+        final int emptyRow = emptyCell / dim;
+        final int emptyCol = emptyCell % dim;
         int rowDiff = emptyRow - row;
         int colDiff = emptyCol - col;
         boolean isInRow = (row == emptyRow);
@@ -183,15 +196,43 @@ public class FramePuzzle extends JFrame {
 
         return true;
     }
+    public void shufflePuzzle() {
+        ArrayList<Integer> shuffledList = new ArrayList<>(size);
+
+        for (boolean isSolvable = false; isSolvable == false;) {
+            shuffledList = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                shuffledList.add(i, i);
+            }
+
+            Collections.shuffle(shuffledList);
+
+            isSolvable = isSolvable(shuffledList);
+        }
+
+
+        for (int index = 0; index < size; index++) {
+            final int ROW = index / dim;
+            final int COL = index % dim;
+
+            if (shuffledList.get(index) == 0) {
+                emptyCell = index;
+                board[ROW][COL].setVisible(false);
+            } else {
+                board[ROW][COL].setText(String.valueOf(shuffledList.get(index)));
+                board[ROW][COL].setVisible(true);
+            }
+        }
+    }
    public boolean isGameDone() {
-        ArrayList<Integer> solvedState = new ArrayList<>(SIZE);
-        for (int i = 1; i < SIZE; i++) {
+        ArrayList<Integer> solvedState = new ArrayList<>(size);
+        for (int i = 1; i < size; i++) {
             solvedState.add(i);
         }
         solvedState.add(0);
 
-        for (int row = 0; row < DIM; row++) {
-            for (int col = 0; col < DIM; col++) {
+        for (int row = 0; row < dim; row++) {
+            for (int col = 0; col < dim; col++) {
                 int cellValue = Integer.parseInt(board[row][col].getText());
                 if (cellValue != solvedState.get(getIndex(row, col))) {
                     return false;
